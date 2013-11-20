@@ -49,23 +49,22 @@ Since most emails do something interesting with database data, you'll need to wr
 
 Methods must return a [Mail][1] or [TMail][2] object. Using ActionMailer, call `Notifier.create_action_name(args)` to return a compatible TMail object. Now on ActionMailer 3.x, `Notifier.action_name(args)` will return a Mail object.
 
-Routing
--------
+To view your mails you'll need to setup routes for your `MailView` subclasses...
 
-A mini router middleware is bundled for Rails 2.x support.
-
-```ruby
-  # config/environments/development.rb
-  config.middleware.use MailView::Mapper, [MailPreview]
-```
-
-For Rails³ you can map the app inline in your routes config.
+e.g. for Rails 3
 
 ```ruby
   # config/routes.rb
   if Rails.env.development?
     mount MailPreview => 'mail_view'
   end
+```
+
+or for Rails 2.x a mini router middleware is  provided
+
+```ruby
+  # config/environments/development.rb
+  config.middleware.use MailView::Mapper, [MailPreview]
 ```
 
 Now just load up `http://localhost:3000/mail_view`.
